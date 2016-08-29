@@ -1,5 +1,5 @@
 var level = 1;
-
+var numOfShades = level + 3;
 ///////////////////// creating shades /////////////////////
 var colorHolder = [];
 // create object
@@ -60,14 +60,14 @@ function createShades() {
       var light = 30;
 
       var randomPosArray = [];
-      for (var k = 0; k < (level + 3); k++) {
+      for (var k = 0; k < numOfShades; k++) {
         randomPosArray.push(k);
       }
       randomPosArray = shuffle(randomPosArray)
 
       // creating individual shades (color, pos, randomPos)
       var positionLog = [];
-      for (var j = 0; j < (level + 3); j++) {
+      for (var j = 0; j < numOfShades; j++) {
         // increasing lightness
         light = light + (lightAdd*[j]);
         // increasing hue;
@@ -77,5 +77,44 @@ function createShades() {
         colorHolder[j] = new shade(color,[j],randomPosArray[j]);
       }
     }
+  }
+}
+
+// creating shades in dom
+
+// define row
+
+// var rowThickness = 100/numOfShades + "%"
+// if window width/height > 1 , height = "100%"", width = rowThickness
+// else , height = rowThickness, width = "100%"
+function newLevel() {
+  // defining styles for rows if both vertical or horizontal
+  var rowThickness = 100/numOfShades + "%";
+  if (screen.width/screen.height > 1){
+    $(".row").css("height": "100%", "width": rowThickness )
+  }
+  else {
+    $(".row").css("height": rowThickness, "width": "100%", "display": "block" )
+  }
+
+  // sort colorHolder by randomPos
+  function sortByKey(array, key) {
+      return array.sort(function(a, b) {
+          var x = a[key]; var y = b[key];
+          return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+      });
+  }
+
+  var sortedColorHolder = sortByKey(colorHolder, 'randomPos');
+  console.log("sortColorHolder: " + sortedColorHolder)
+
+  // inserting colors into the array in order of randomPos
+  for (var i = 0; i < sortedColorHolder.length; i++) {
+    var temp = $("<div>");
+    temp.addClass("row ui-state-default");
+    temp.attr("id", "shade" + [i]);
+    $("#sortable").append(temp);
+    // attaching colour
+    $("#shade"+[i]).css( "background-color": sortedColorHolder[i]["color"];)
   }
 }
