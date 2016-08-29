@@ -1,0 +1,76 @@
+body {
+  background-color: black;
+}
+
+.header , .footer {
+  position: absolute;
+  width: 100%;
+/*   background-color: rgba(0,0,0,0.2); */
+  text-align: center;
+  color: white;
+  z-index: 100;
+  text-shadow: 2px 2px black;
+  padding: 0.5em;
+}
+
+.header {
+  top: 0;
+}
+
+.footer {
+  bottom: 0;
+}
+
+.container {
+  position: absolute;
+  display: table;
+  height: 100%;
+  width: 100%;
+}
+
+.row {
+  display: inline-block;
+/*   display: block; if vertical*/
+  width: 10%;
+  height: 100%;
+}
+
+.firstColor {
+  background-color: hsl(0, 75%, 30%);
+}
+
+.secondColor{
+  background-color: hsl(0, 75%, 35%);
+}
+
+.thirdColor{
+  background-color: hsl(0, 75%, 40%);
+}
+
+.fourthColor{
+  background-color: hsl(0, 75%, 45%);
+}
+
+.fifthColor{
+  background-color: hsl(0, 75%, 50%);
+}
+
+.sixthColor{
+  background-color: hsl(0, 75%, 55%);
+}
+
+.seventhColor{
+  background-color: hsl(0, 75%, 60%);
+}
+
+.eigthColor{
+  background-color: hsl(0, 75%, 65%);
+}
+
+.ninthColor{
+  background-color: hsl(0, 75%, 70%);
+}
+
+.tenthColor{
+    background-color: hsl(0, 75%, 75%);
+}
