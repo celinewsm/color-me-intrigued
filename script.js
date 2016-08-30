@@ -45,7 +45,7 @@ function shuffle(array) {
 }
 
 function createShades() {
-  numOfShades = level + 3 // will start with 4 shades
+  numOfShades = level + 3; // will start with 4 shades
   colorHolder = [];
   var hueAdd;
   var lightAdd;
@@ -114,18 +114,22 @@ function newLevel() {
   }
 
   // defining styles for rows if both vertical or horizontal
+  checkWindow();
+}
+newLevel();
+
+function checkWindow(){
   var rowThickness = 100/numOfShades + "%";
   var windowHeight = $(window).height();
   var windowWidth = $(window).width();
   if ((windowHeight/windowWidth) < 1){
-    $(".row").css({"height" : "100%", "width" : rowThickness});
+    $(".row").css({"height" : "100%", "width" : rowThickness, "display": "inline-block"});
   }
   else {
     $(".row").css({"height": rowThickness, "width": "100%", "display": "block"})
   }
-}
-newLevel();
 
+}
 
 
 // function checkWin(){
@@ -153,25 +157,81 @@ newLevel();
 //   }
 // }
 
+function gameOver(){
+  intervalManager(false);
+  var temp = $("<div>");
+  // var classesToAdd = " "
+  temp.attr("id", "gameOver");
+  $("#insertOverlays").append(temp);
 
-
-var timeNow = 120;
-var countDown = function(){
-  if (timeNow <= 0) {
-    document.getElementsByTagName("body")[0].classList="exploded";
-    BldgExplode.play();
-    newLevel();
-
+  var temp2 = $("<div>");
+  var headlineInput = $("<h1>").text("Score");
+  var subHeadInput = $("<p>").text("You've reached level " + level + "!");
+  var button = $("<button>").attr("id", "reset").text("Try again");
+  // generate feedback according to level
+  if ( level <= 3 ) {
+    var feedback = "Seriously? You either need to get your eyes checked or TRY HARDER!"
   }
-  else if (timeNow < 10) {
-    timeNow -= 0.012
-    document.getElementById("sec").textContent = "0" + timeNow.toFixed(3);
+  else if (level <= 7) {
+    var feedback = "Not too bad. But you can do better."
+  }
+  else if (level <= 12) {
+    var feedback = "You're really good at this. Think you can beat your own score?"
   }
   else {
-    timeNow -= 0.012
-    document.getElementById("sec").textContent = timeNow.toFixed(3);
+    var feedback = "YOU HAVE X-RAY VISION AND LIFE ISN'T FAIR."
+  }
+
+  var copyInput = $("<p>").text(feedback);
+  temp2.attr("id", "popUp").append($("<div>").attr("id", "popUpText").append(headlineInput).append(subHeadInput).append(copyInput).append(button))
+  $("#insertOverlays").append(temp2);
+
+  $( "#reset" ).click(function() {
+    console.log("Reset button clicked");
+    reset();
+  });
+
+}
+
+
+function reset() {
+  // remove pop up
+  $( "#insertOverlays" ).empty();
+  // remove shades
+  $( "#sortable" ).empty();
+    level = 1;
+    console.log("reset level to: " + level + " (should be 1)")
+    // reset level
+    newLevel();
+    // reset time + interval
+    timeNow = 10;
+    intervalManager(true, countDown, 1000);
+
+
+}
+
+var intervalID = null;
+function intervalManager(flag, triggerFunction, time) {
+   if(flag)
+     intervalID =  setInterval(triggerFunction, time);
+   else
+     clearInterval(intervalID);
+}
+
+// change timeNow at reset as well
+var timeNow = 10;
+var countDown = function(){
+  if (timeNow <= 0) {
+    $("#timer").text("Time Out!");
+    gameOver();
+  }
+  else {
+    timeNow -= 1
+    $("#timer").text( "Time left: " + timeNow);
   }
 }
+
+intervalManager(true, countDown, 1000);
 
 
 // to make divs draggable
@@ -227,3 +287,8 @@ $( function() {
 
   //  $( "#sortable").disableSelection();
  } );
+
+ $( window ).resize(function() {
+  console.log("Window resized");
+  checkWindow();
+ });
