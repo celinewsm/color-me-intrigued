@@ -1,5 +1,5 @@
 var level = 1;
-///////////////////// creating shades /////////////////////
+
 var numOfShades;
 var colorHolder = [];
 // create object
@@ -131,32 +131,6 @@ function checkWindow(){
 
 }
 
-
-// function checkWin(){
-//   var forChecking = [];
-//   var checkWin = [];
-//   // create an array to check win
-//   for (var l = 0; l < colorHolder.length; l++) {
-//     var valueToPush = colorHolder[l]["randomPos"];
-//     forChecking.push("shade" + valueToPush);
-//   }
-//   console.log("forChecking array: " + forChecking)
-//
-//   for (var i = 0; i < forChecking.length; i++) {
-//     if ( $(".row")[i].id === forChecking[i] ){
-//       checkWin.push("x");
-//     }
-//   }
-//
-//   if (checkWin.length === forChecking.length){
-//     // won
-//     console.log("Level won")
-//   }
-//   else {
-//     console.log("player hasn't won")
-//   }
-// }
-
 function gameOver(){
   intervalManager(false);
   var temp = $("<div>");
@@ -206,8 +180,6 @@ function reset() {
     // reset time + interval
     timeNow = 10;
     intervalManager(true, countDown, 1000);
-
-
 }
 
 var intervalID = null;
@@ -232,7 +204,6 @@ var countDown = function(){
 }
 
 intervalManager(true, countDown, 1000);
-
 
 // to make divs draggable
 $( function() {
