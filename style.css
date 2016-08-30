@@ -85,7 +85,7 @@ h1 {
 }
 
 @media (min-width: 550px) {
-  #popUpText {
+  body {
     font-size: 250%;
   }
 }
