@@ -1,6 +1,6 @@
-var level = 5;
+var level = 1;
 ///////////////////// creating shades /////////////////////
-var numOfShades = level + 3;
+var numOfShades;
 var colorHolder = [];
 // create object
 function shade(color, pos, randomPos) {
@@ -40,18 +40,19 @@ function shuffle(array) {
         temp = array[i];
         array[i] = array[j];
         array[j] = temp;
-
     }
     return array;
 }
 
 function createShades() {
+  numOfShades = level + 3 // will start with 4 shades
+  colorHolder = [];
   var hueAdd;
   var lightAdd;
   // find out difficulty level
   for (var i = 0; i < difficultyLevel.length; i++) {
     if (difficultyLevel[i]["lowestLvl"] <= level && difficultyLevel[i]["highestLvl"] >= level){
-      console.log("difficult level selected: " + difficultyLevel[i]["difficulty"])
+      console.log("difficulty level selected: " + difficultyLevel[i]["difficulty"])
       var hue = Math.round(Math.random()*310);
       hueAdd = difficultyLevel[i]["hueAdd"];
       console.log("hueAdd: " + hueAdd)
@@ -87,8 +88,8 @@ function createShades() {
 // else , height = rowThickness, width = "100%"
 function newLevel() {
   createShades();
+  $("#level").text( "Level " + level );
   // sort colorHolder by randomPos
-
   var sortedColorHolder = colorHolder.slice(0);
 
   function sortByKey(array, key) {
@@ -154,19 +155,46 @@ newLevel();
 
 
 
+var timeNow = 120;
+var countDown = function(){
+  if (timeNow <= 0) {
+    document.getElementsByTagName("body")[0].classList="exploded";
+    BldgExplode.play();
+    newLevel();
+
+  }
+  else if (timeNow < 10) {
+    timeNow -= 0.012
+    document.getElementById("sec").textContent = "0" + timeNow.toFixed(3);
+  }
+  else {
+    timeNow -= 0.012
+    document.getElementById("sec").textContent = timeNow.toFixed(3);
+  }
+}
+
+
 // to make divs draggable
 $( function() {
    $( "#sortable" ).sortable({
     //  placeholder: "#sortable",
      update: function checkWin(event,ui){
        var forChecking = [];
+       var forCheckingToo = [];
        var checkWin = [];
+       var checkWinToo = [];
        // create an array to check win
        for (var l = 0; l < colorHolder.length; l++) {
          var valueToPush = colorHolder[l]["randomPos"];
          forChecking.push("shade" + valueToPush);
+         console.log("forChecking array: " + forChecking)
        }
-       console.log("forChecking array: " + forChecking)
+
+       for (var m = colorHolder.length - 1; m >= 0 ; m--) {
+         var valueToPush = colorHolder[m]["randomPos"];
+         forCheckingToo.push("shade" + valueToPush);
+       }
+       console.log("forCheckingToo array: " + forCheckingToo)
 
        for (var i = 0; i < forChecking.length; i++) {
          if ( $(".row")[i].id === forChecking[i] ){
@@ -174,9 +202,22 @@ $( function() {
          }
        }
 
-       if (checkWin.length === forChecking.length){
+       for (var i = 0; i < forCheckingToo.length; i++) {
+         if ( $(".row")[i].id === forCheckingToo[i] ){
+           checkWinToo.push("y");
+         }
+       }
+
+       if (checkWin.length === forChecking.length || checkWinToo.length === forCheckingToo.length ){
          // won
          console.log("Level won")
+         $( "#sortable" ).empty();
+         level = level + 1;
+         newLevel();
+        //  var forChecking = [];
+        //  var forCheckingToo = [];
+        //  var checkWin = [];
+        //  var checkWinToo = [];
        }
        else {
          console.log("player hasn't won")
