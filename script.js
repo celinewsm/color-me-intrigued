@@ -1,6 +1,6 @@
 var level = 5;
-var numOfShades = level + 3;
 ///////////////////// creating shades /////////////////////
+var numOfShades = level + 3;
 var colorHolder = [];
 // create object
 function shade(color, pos, randomPos) {
@@ -80,16 +80,17 @@ function createShades() {
   }
 }
 
-// creating shades in dom
-
+// input shades in dom
 // define row
-
 // var rowThickness = 100/numOfShades + "%"
 // if window width/height > 1 , height = "100%"", width = rowThickness
 // else , height = rowThickness, width = "100%"
 function newLevel() {
   createShades();
   // sort colorHolder by randomPos
+
+  var sortedColorHolder = colorHolder.slice(0);
+
   function sortByKey(array, key) {
       return array.sort(function(a, b) {
           var x = a[key]; var y = b[key];
@@ -97,12 +98,13 @@ function newLevel() {
           return ((x < y) ? -1 : ((x > y) ? 1 : 0));
       });
   }
-  var sortedColorHolder = sortByKey(colorHolder, 'randomPos');
+  var sortedColorHolder = sortByKey(sortedColorHolder, 'randomPos');
   console.log("sortColorHolder: " + sortedColorHolder)
 
   // inserting colors into the array in order of randomPos
   for (var i = 0; i < sortedColorHolder.length; i++) {
     var temp = $("<div>");
+    // var classesToAdd = " "
     temp.addClass("row ui-state-default");
     temp.attr("id", "shade" + [i]);
     $("#sortable").append(temp);
@@ -120,14 +122,67 @@ function newLevel() {
   else {
     $(".row").css({"height": rowThickness, "width": "100%", "display": "block"})
   }
-
-
-
 }
-
-$( function() {
-   $( "#sortable" ).sortable();
-   $( "#sortable").disableSelection();
- } );
-
 newLevel();
+
+
+
+// function checkWin(){
+//   var forChecking = [];
+//   var checkWin = [];
+//   // create an array to check win
+//   for (var l = 0; l < colorHolder.length; l++) {
+//     var valueToPush = colorHolder[l]["randomPos"];
+//     forChecking.push("shade" + valueToPush);
+//   }
+//   console.log("forChecking array: " + forChecking)
+//
+//   for (var i = 0; i < forChecking.length; i++) {
+//     if ( $(".row")[i].id === forChecking[i] ){
+//       checkWin.push("x");
+//     }
+//   }
+//
+//   if (checkWin.length === forChecking.length){
+//     // won
+//     console.log("Level won")
+//   }
+//   else {
+//     console.log("player hasn't won")
+//   }
+// }
+
+
+
+// to make divs draggable
+$( function() {
+   $( "#sortable" ).sortable({
+    //  placeholder: "#sortable",
+     update: function checkWin(event,ui){
+       var forChecking = [];
+       var checkWin = [];
+       // create an array to check win
+       for (var l = 0; l < colorHolder.length; l++) {
+         var valueToPush = colorHolder[l]["randomPos"];
+         forChecking.push("shade" + valueToPush);
+       }
+       console.log("forChecking array: " + forChecking)
+
+       for (var i = 0; i < forChecking.length; i++) {
+         if ( $(".row")[i].id === forChecking[i] ){
+           checkWin.push("x");
+         }
+       }
+
+       if (checkWin.length === forChecking.length){
+         // won
+         console.log("Level won")
+       }
+       else {
+         console.log("player hasn't won")
+       }
+     }
+   })
+
+  //  $( "#sortable").disableSelection();
+ } );
