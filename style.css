@@ -1,7 +1,12 @@
+
+
+
 body {
   background-color: black;
   font-family: 'Raleway', sans-serif;
 }
+
+
 
 .header , .footer {
   position: absolute;
@@ -77,4 +82,10 @@ body {
 
 h1 {
   text-decoration: underline;
+}
+
+@media (min-width: 550px) {
+  #popUpText {
+    font-size: 250%;
+  }
 }
