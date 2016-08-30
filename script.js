@@ -1,4 +1,4 @@
-var level = 1;
+var level = 5;
 var numOfShades = level + 3;
 ///////////////////// creating shades /////////////////////
 var colorHolder = [];
@@ -48,15 +48,15 @@ function shuffle(array) {
 function createShades() {
   var hueAdd;
   var lightAdd;
-
   // find out difficulty level
   for (var i = 0; i < difficultyLevel.length; i++) {
-
-    if (difficultyLevel[i]["lowestLvl"] >= level && difficultyLevel[i]["highestLvl"] <= level){
-
+    if (difficultyLevel[i]["lowestLvl"] <= level && difficultyLevel[i]["highestLvl"] >= level){
+      console.log("difficult level selected: " + difficultyLevel[i]["difficulty"])
       var hue = Math.round(Math.random()*310);
       hueAdd = difficultyLevel[i]["hueAdd"];
+      console.log("hueAdd: " + hueAdd)
       lightAdd = difficultyLevel[i]["lightAdd"];
+      console.log("lightAdd: " + lightAdd)
       var light = 30;
 
       var randomPosArray = [];
@@ -69,12 +69,12 @@ function createShades() {
       var positionLog = [];
       for (var j = 0; j < numOfShades; j++) {
         // increasing lightness
-        light = light + (lightAdd*[j]);
+        light = light + (lightAdd);
         // increasing hue;
-        hue = hue + (hueADD*[j]);
+        hue = hue + (hueAdd);
         // creating color
         var color = "hsl( " + hue + " , " + 75 + "%" + " , " + light + "% )";
-        colorHolder[j] = new shade(color,[j],randomPosArray[j]);
+        colorHolder[j] = new shade(color,j,randomPosArray[j]);
       }
     }
   }
@@ -88,23 +88,15 @@ function createShades() {
 // if window width/height > 1 , height = "100%"", width = rowThickness
 // else , height = rowThickness, width = "100%"
 function newLevel() {
-  // defining styles for rows if both vertical or horizontal
-  var rowThickness = 100/numOfShades + "%";
-  if (screen.width/screen.height > 1){
-    $(".row").css("height": "100%", "width": rowThickness )
-  }
-  else {
-    $(".row").css("height": rowThickness, "width": "100%", "display": "block" )
-  }
-
+  createShades();
   // sort colorHolder by randomPos
   function sortByKey(array, key) {
       return array.sort(function(a, b) {
           var x = a[key]; var y = b[key];
+          ////////////////////////// find out what is the ???? for //////////////////////////
           return ((x < y) ? -1 : ((x > y) ? 1 : 0));
       });
   }
-
   var sortedColorHolder = sortByKey(colorHolder, 'randomPos');
   console.log("sortColorHolder: " + sortedColorHolder)
 
@@ -115,6 +107,27 @@ function newLevel() {
     temp.attr("id", "shade" + [i]);
     $("#sortable").append(temp);
     // attaching colour
-    $("#shade"+[i]).css( "background-color": sortedColorHolder[i]["color"];)
+    $("#shade"+[i]).css( "background-color", sortedColorHolder[i]["color"])
   }
+
+  // defining styles for rows if both vertical or horizontal
+  var rowThickness = 100/numOfShades + "%";
+  var windowHeight = $(window).height();
+  var windowWidth = $(window).width();
+  if ((windowHeight/windowWidth) < 1){
+    $(".row").css({"height" : "100%", "width" : rowThickness});
+  }
+  else {
+    $(".row").css({"height": rowThickness, "width": "100%", "display": "block"})
+  }
+
+
+
 }
+
+$( function() {
+   $( "#sortable" ).sortable();
+   $( "#sortable").disableSelection();
+ } );
+
+newLevel();
