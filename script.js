@@ -1,7 +1,54 @@
 var level = 1;
-
 var numOfShades;
 var colorHolder = [];
+var timeNow = 120;
+
+// creating starting page
+function landingPage() {
+  // create overlay
+  createOverlay();
+  // create random rainbow
+  randomRainbow();
+  checkWindow();
+}
+
+function randomRainbow(){
+  $( "#sortable" ).empty();
+  var rainbowHex = [ "#9400D3" , "#4B0082" , "#0000FF" , "#00FF00" , "#FFFF00" , "#FF7F00" , "#FF0000" ]
+  rainbowHex = shuffle(rainbowHex);
+  numOfShades = rainbowHex.length;
+  for (var z = 0; z < rainbowHex.length; z++) {
+    console.log("creating raindow divs")
+    var temp = $("<div>");
+    temp.addClass("row");
+    temp.attr("id", "shade" + [z]);
+    $("#sortable").append(temp);
+    // attaching colour
+    $("#shade"+[z]).css( "background-color", rainbowHex[z]);
+  }
+
+// create welcome pop up
+  var temp2 = $("<div>");
+  var headlineInput = $("<h1>").text("Color Me Intrigued");
+  var subHeadInput = $("<p>").text("Simply drag and drop the colour strips and arrange them from the darkest to lightest (or vice versa!).");
+  var copyInput = $("<p>").text("You have " + timeNow + " seconds to hit the higest level possible!" );
+  var button = $("<button>").attr("id", "reset").text("Ready?");
+  temp2.attr("id", "popUp").append($("<div>").attr("id", "popUpText").append(headlineInput).append(subHeadInput).append(copyInput).append(button))
+  $("#insertOverlays").append(temp2);
+  // insert reset button for start game;
+  $( "#reset" ).click(function() {
+    console.log("Reset button clicked");
+    reset();
+  });
+}
+landingPage();
+
+function createOverlay(){
+  var temp = $("<div>");
+  temp.attr("id", "gameOver");
+  $("#insertOverlays").append(temp);
+}
+
 // create object
 function shade(color, pos, randomPos) {
   this.color = color;
@@ -116,7 +163,7 @@ function newLevel() {
   // defining styles for rows if both vertical or horizontal
   checkWindow();
 }
-newLevel();
+// newLevel();
 
 function checkWindow(){
   var rowThickness = 100/numOfShades + "%";
@@ -133,10 +180,7 @@ function checkWindow(){
 
 function gameOver(){
   intervalManager(false);
-  var temp = $("<div>");
-  // var classesToAdd = " "
-  temp.attr("id", "gameOver");
-  $("#insertOverlays").append(temp);
+  createOverlay();
 
   var temp2 = $("<div>");
   var headlineInput = $("<h1>").text("Score");
@@ -164,7 +208,6 @@ function gameOver(){
     console.log("Reset button clicked");
     reset();
   });
-
 }
 
 
@@ -178,7 +221,7 @@ function reset() {
     // reset level
     newLevel();
     // reset time + interval
-    timeNow = 10;
+    timeNow = 120;
     intervalManager(true, countDown, 1000);
 }
 
@@ -191,7 +234,6 @@ function intervalManager(flag, triggerFunction, time) {
 }
 
 // change timeNow at reset as well
-var timeNow = 10;
 var countDown = function(){
   if (timeNow <= 0) {
     $("#timer").text("Time Out!");
@@ -202,8 +244,6 @@ var countDown = function(){
     $("#timer").text( "Time left: " + timeNow);
   }
 }
-
-intervalManager(true, countDown, 1000);
 
 // to make divs draggable
 $( function() {
@@ -238,17 +278,12 @@ $( function() {
            checkWinToo.push("y");
          }
        }
-
        if (checkWin.length === forChecking.length || checkWinToo.length === forCheckingToo.length ){
          // won
          console.log("Level won")
          $( "#sortable" ).empty();
          level = level + 1;
          newLevel();
-        //  var forChecking = [];
-        //  var forCheckingToo = [];
-        //  var checkWin = [];
-        //  var checkWinToo = [];
        }
        else {
          console.log("player hasn't won")
