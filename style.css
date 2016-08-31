@@ -1,6 +1,4 @@
 
-
-
 body {
   background-color: black;
   font-family: 'Raleway', sans-serif;
@@ -50,7 +48,7 @@ body {
   z-index: 101;
 }
 
-/*#popUp {
+#popUp {
   color: white;
   text-align: center ;
   position: absolute;
@@ -60,45 +58,11 @@ body {
   background-color: rgba(0, 0, 0, 1);
   z-index: 102;
   }
+
 #popUpText {
   position: relative;
   padding: 2em;
-}*/
-
-
-#flex-container {
-    height: 100%;
-    padding: 0;
-    margin: 0;
-    display: -webkit-box;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: -webkit-flex;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 101;
-    position: absolute;
-    left: 0; top: 0; right: 0; bottom: 0;
 }
-
-#popUp {
-    width: 70%;
-    background-color: black;
-  }
-
-#popUpText {
-    padding: 5%;
-    width: auto;
-    height: 70%;
-    margin: 10px;
-    color: white;
-    /*font-size: 2em;*/
-    text-align: center;
-}
-
-
-
 
 #reset {
   color: #ffffff;
@@ -130,5 +94,5 @@ h1 {
   }
 
   #popUp {
-    width: 80%;
+    top: 15%;
 }
