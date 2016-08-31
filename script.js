@@ -28,12 +28,12 @@ function randomRainbow(){
   }
 
 // create welcome pop up
-  var temp2 = $("<div>");
   var headlineInput = $("<h1>").text("Color Me Intrigued");
   var subHeadInput = $("<p>").text("Simply drag and drop the colour strips and arrange them from the darkest to lightest (or vice versa!).");
   var copyInput = $("<p>").text("You have " + timeNow + " seconds to hit the higest level possible!" );
   var button = $("<button>").attr("id", "reset").text("Ready?");
-  temp2.attr("id", "popUp").append($("<div>").attr("id", "popUpText").append(headlineInput).append(subHeadInput).append(copyInput).append(button))
+  // drawing pop up
+  var temp2 = $("<div>").attr("id", "flex-container").append($("<div>").attr("id", "popUp").append($("<div>").attr("id", "popUpText").append(headlineInput).append(subHeadInput).append(copyInput).append(button)));
   $("#insertOverlays").append(temp2);
   // insert reset button for start game;
   $( "#reset" ).click(function() {
@@ -182,7 +182,7 @@ function gameOver(){
   intervalManager(false);
   createOverlay();
 
-  var temp2 = $("<div>");
+  // var temp2 = $("<div>");
   var headlineInput = $("<h1>").text("Score");
   var subHeadInput = $("<p>").text("You've reached level " + level + "!");
   var button = $("<button>").attr("id", "reset").text("Try again");
@@ -205,7 +205,8 @@ function gameOver(){
   }
 
   var copyInput = $("<p>").text(feedback);
-  temp2.attr("id", "popUp").append($("<div>").attr("id", "popUpText").append(headlineInput).append(subHeadInput).append(copyInput).append(button))
+  // drawing pop up
+  var temp2 = $("<div>").attr("id", "flex-container").append($("<div>").attr("id", "popUp").append($("<div>").attr("id", "popUpText").append(headlineInput).append(subHeadInput).append(copyInput).append(button)));
   $("#insertOverlays").append(temp2);
 
   $( "#reset" ).click(function() {
@@ -213,7 +214,6 @@ function gameOver(){
     reset();
   });
 }
-
 
 function reset() {
   // remove pop up
