@@ -234,7 +234,6 @@ function reset() {
     timeNow = 120;
     intervalManager(true, countDown, 1000);
     var tick_1s = document.getElementById("tick_1s");
-    tick_1s.play();
 }
 
 var intervalID = null;
@@ -246,21 +245,38 @@ function intervalManager(flag, triggerFunction, time) {
 }
 
 // change timeNow at reset as well
+var jaws = document.getElementById("jaws");
+var jawsVol;
 var countDown = function(){
   if (timeNow <= 0) {
     $("#timer").text("Time Out!");
+    jaws.volume = jawsVol;
     gameOver();
   }
   else if (timeNow === 20) {
-    timeNow -= 1
-    var jaws = document.getElementById("jaws");
+    clockTick()
     jaws.play();
+    jawsVol = 0
+    jaws.volume = jawsVol;
   }
+  else if (timeNow < 20 ) {
+    clockTick()
+    jawsVol += 1/20;
+    jaws.volume = jawsVol;
+  }
+
   else {
-    timeNow -= 1
-    $("#timer").text( "Time left: " + timeNow);
+    clockTick()
   }
 }
+
+
+function clockTick() {
+  timeNow -= 1;
+  $("#timer").text( "Time left: " + timeNow);
+  tick_1s.play();
+}
+
 
 // to make divs draggable
 $( function() {
