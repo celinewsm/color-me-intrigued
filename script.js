@@ -196,6 +196,10 @@ function gameOver(){
   else if (level <= 12) {
     var feedback = "You're really good at this. Think you can beat your own score?"
   }
+  // easter egg for annabel
+  else if (level === 14) {
+    var feedback = "YOU MADE IT, ANNA! GOOD JOB! Now on to level 15! (if you're not anna, sorry. You're really awesome too. kthybye.)"
+  }
   else {
     var feedback = "YOU HAVE X-RAY VISION AND LIFE ISN'T FAIR."
   }
