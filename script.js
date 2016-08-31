@@ -134,6 +134,8 @@ function createShades() {
 // if window width/height > 1 , height = "100%"", width = rowThickness
 // else , height = rowThickness, width = "100%"
 function newLevel() {
+  var levelUp = document.getElementById("levelUp");
+  levelUp.play();
   createShades();
   $("#level").text( "Level " + level );
   // sort colorHolder by randomPos
@@ -238,15 +240,36 @@ function intervalManager(flag, triggerFunction, time) {
 }
 
 // change timeNow at reset as well
+var jaws = document.getElementById("jaws");
+var jawsVol;
+
 var countDown = function(){
   if (timeNow <= 0) {
     $("#timer").text("Time Out!");
     gameOver();
   }
-  else {
-    timeNow -= 1
-    $("#timer").text( "Time left: " + timeNow);
+  else if (timeNow === 20) {
+    clockTick()
+    jaws.play();
+    jawsVol = 0
+    jaws.volume = jawsVol;
   }
+  else if (timeNow < 20) {
+    clockTick()
+    jawsVol += 1/20;
+    jaws.volume = jawsVol;
+  }
+  else {
+    clockTick()
+  }
+}
+
+
+function clockTick () {
+  var tick_1s = document.getElementById("tick_1s");
+  tick_1s.play();
+  $("#timer").text( "Time left: " + timeNow);
+  timeNow -= 1
 }
 
 // to make divs draggable
