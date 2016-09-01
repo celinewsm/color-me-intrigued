@@ -279,12 +279,14 @@ document.addEventListener("DOMContentLoaded", function() {
       gameOver();
     }
     else if (timeNow === 20) {
+      var jaws = document.getElementById("jaws");
       clockTick();
-      jawsVol = 0
+      jawsVol = 0;
       jaws.volume = jawsVol;
       jaws.play();
     }
     else if (timeNow < 20) {
+      var jaws = document.getElementById("jaws");
       clockTick()
       jawsVol += 1/20;
       jaws.volume = jawsVol;
