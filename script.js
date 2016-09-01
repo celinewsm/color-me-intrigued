@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // create welcome pop up
     var temp2 = $('<div>')
     var headlineInput = $('<h1>').text('Color Me Intrigued')
-    var subHeadInput = $('<p>').text('Simply drag and drop the colour strips and arrange them from the darkest to lightest (or vice versa!).')
+    var subHeadInput = $('<p>').text('Drag and rearrange the color strips from the darkest to lightest (or vice versa) to level up.')
     var copyInput = $('<p>').text('You have ' + timeNow + ' seconds to hit the higest level possible!')
     var button = $('<button>').attr('id', 'reset').text('Ready?')
     temp2.attr('id', 'popUp').append($('<div>').attr('id', 'popUpText').append(headlineInput).append(subHeadInput).append(copyInput).append(button))
