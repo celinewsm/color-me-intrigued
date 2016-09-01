@@ -206,13 +206,12 @@ document.addEventListener("DOMContentLoaded", function() {
     else {
       $(".row").css({"height": rowThickness, "width": "100%", "display": "block"})
     }
-
+    $('#popUp').css('top', ( $(window).height() - $('#popUp').height() ) / 2 )
   }
 
   function gameOver(){
     intervalManager(false);
     createOverlay();
-
     var temp2 = $("<div>");
     var headlineInput = $("<h1>").text("Score");
     var subHeadInput = $("<p>").text("You've reached level " + level + "!");
@@ -238,6 +237,8 @@ document.addEventListener("DOMContentLoaded", function() {
     var copyInput = $("<p>").text(feedback);
     temp2.attr("id", "popUp").append($("<div>").attr("id", "popUpText").append(headlineInput).append(subHeadInput).append(copyInput).append(button))
     $("#insertOverlays").append(temp2);
+
+    checkWindow();
 
     $( "#reset" ).click(function() {
       console.log("Reset button clicked");
