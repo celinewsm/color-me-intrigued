@@ -94,6 +94,7 @@ function shuffle(array) {
 function createShades() {
   numOfShades = level + 3; // will start with 4 shades
   colorHolder = [];
+  var randomPosArray;
   var hueAdd;
   var lightAdd;
   // find out difficulty level
@@ -106,12 +107,35 @@ function createShades() {
       lightAdd = difficultyLevel[i]["lightAdd"];
       console.log("lightAdd: " + lightAdd)
       var light = 30;
+      var match = numOfShades;
+      var matchToo = numOfShades;
+      // shuffleShades()
+      while (match === numOfShades || matchToo === numOfShades) {
+        randomPosArray = [];
+        match = 0;
+        matchToo = 0;
+        for (var i = 0; i < numOfShades; i++) {
+          randomPosArray.push(i);
+        }
+        var checkPosRand = randomPosArray.slice(0);
+        var checkPosRandToo = []
+        for (var l = numOfShades - 1; l >= 0 ; l--) {
+          checkPosRandToo.push(checkPosRand[l]);
+        }
+        randomPosArray = shuffle(randomPosArray)
 
-      var randomPosArray = [];
-      for (var k = 0; k < numOfShades; k++) {
-        randomPosArray.push(k);
+        // checking if tiles are shuffled
+        for  (var k = 0 ; k < numOfShades ; k++){
+          if (checkPosRand[k] === randomPosArray[k]){
+            match++;
+          }
+        }
+        for  (var m = 0 ; m < numOfShades ; m++){
+          if (checkPosRandToo[m] === randomPosArray[m]){
+            matchToo++;
+          }
+        }
       }
-      randomPosArray = shuffle(randomPosArray)
 
       // creating individual shades (color, pos, randomPos)
       var positionLog = [];
@@ -249,7 +273,7 @@ var countDown = function(){
     gameOver();
   }
   else if (timeNow === 20) {
-    clockTick()
+    clockTick();
     jaws.play();
     jawsVol = 0
     jaws.volume = jawsVol;
