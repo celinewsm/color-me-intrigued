@@ -280,9 +280,9 @@ document.addEventListener("DOMContentLoaded", function() {
     }
     else if (timeNow === 20) {
       clockTick();
-      jaws.play();
       jawsVol = 0
       jaws.volume = jawsVol;
+      jaws.play();
     }
     else if (timeNow < 20) {
       clockTick()
