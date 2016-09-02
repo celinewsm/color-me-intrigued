@@ -1,5 +1,5 @@
 /* global $ */
-// move global variables into DOMContentLoaded
+// move global variables into DOMContentLoaded in final version
 var level = 1
 var numOfShades
 var colorHolder = []
@@ -47,6 +47,56 @@ document.addEventListener('DOMContentLoaded', function () {
     var temp = $('<div>')
     temp.attr('id', 'gameOver')
     $('#insertOverlays').append(temp)
+  }
+
+  function checkWindow () {
+    var rowThickness = 100 / numOfShades + '%'
+    var windowHeight = $(window).height()
+    var windowWidth = $(window).width()
+    if ((windowHeight / windowWidth) < 1) {
+      $('.row').css({'height': '100%', 'width': rowThickness, 'display': 'inline-block'})
+    } else {
+      $('.row').css({'height': rowThickness, 'width': '100%', 'display': 'block'})
+    }
+    $('#popUp').css('top', ($(window).height() - $('#popUp').height()) / 2)
+  }
+
+  function reset () {
+    // remove pop up
+    $('#insertOverlays').empty()
+    // remove shades
+    $('#sortable').empty()
+    // set back to level 1
+    level = 1
+    console.log('reset level to: ' + level)
+    // create and draw shades
+    newLevel()
+    // reset time + interval
+    timeNow = 120
+    intervalManager(true, countDown, 1000)
+  }
+
+  var intervalID
+  function intervalManager (flag, triggerFunction, time) {
+    if (flag) {
+      intervalID = setInterval(triggerFunction, time)
+    } else {
+      clearInterval(intervalID)
+    }
+  }
+
+  // to shuffle order
+  function shuffle (array) {
+    var i = array.length
+    var j = 0
+    var temp
+    while (i--) {
+      j = Math.floor(Math.random() * (i + 1))
+      temp = array[i]
+      array[i] = array[j]
+      array[j] = temp
+    }
+    return array
   }
 
   // create object
@@ -168,18 +218,6 @@ document.addEventListener('DOMContentLoaded', function () {
     checkWindow()
   }
 
-  function checkWindow () {
-    var rowThickness = 100 / numOfShades + '%'
-    var windowHeight = $(window).height()
-    var windowWidth = $(window).width()
-    if ((windowHeight / windowWidth) < 1) {
-      $('.row').css({'height': '100%', 'width': rowThickness, 'display': 'inline-block'})
-    } else {
-      $('.row').css({'height': rowThickness, 'width': '100%', 'display': 'block'})
-    }
-    $('#popUp').css('top', ($(window).height() - $('#popUp').height()) / 2)
-  }
-
   function gameOver () {
     intervalManager(false)
     createOverlay()
@@ -211,30 +249,6 @@ document.addEventListener('DOMContentLoaded', function () {
       console.log('Reset button clicked')
       reset()
     })
-  }
-
-  function reset () {
-    // remove pop up
-    $('#insertOverlays').empty()
-    // remove shades
-    $('#sortable').empty()
-    // set back to level 1
-    level = 1
-    console.log('reset level to: ' + level)
-    // create and draw shades
-    newLevel()
-    // reset time + interval
-    timeNow = 120
-    intervalManager(true, countDown, 1000)
-  }
-
-  var intervalID
-  function intervalManager (flag, triggerFunction, time) {
-    if (flag) {
-      intervalID = setInterval(triggerFunction, time)
-    } else {
-      clearInterval(intervalID)
-    }
   }
 
   // change timeNow at reset as well
@@ -278,7 +292,7 @@ document.addEventListener('DOMContentLoaded', function () {
         for (var l = 0; l < colorHolder.length; l++) {
           valueToPush = colorHolder[l]['randomPos']
           forChecking.push('shade' + valueToPush)
-          // console.log('forChecking array: ' + forChecking)
+        // console.log('forChecking array: ' + forChecking)
         }
         forCheckingToo = forChecking.slice(0)
         forChecking.reverse()
@@ -307,20 +321,6 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     })
   })
-
-  // to shuffle order
-  function shuffle (array) {
-    var i = array.length
-    var j = 0
-    var temp
-    while (i--) {
-      j = Math.floor(Math.random() * (i + 1))
-      temp = array[i]
-      array[i] = array[j]
-      array[j] = temp
-    }
-    return array
-  }
 
   $(window).resize(function () {
     console.log('Window resized')
