@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function () {
   landingPage()
 
   function randomRainbow () {
-    $('#sortable').empty()
+    // $('#sortable').empty()
     var rainbowHex = ['#9400D3', '#4B0082', '#0000FF', '#00FF00', '#FFFF00', '#FF7F00', '#FF0000']
     rainbowHex = shuffle(rainbowHex)
     numOfShades = rainbowHex.length
@@ -59,6 +59,8 @@ document.addEventListener('DOMContentLoaded', function () {
       $('.row').css({'height': rowThickness, 'width': '100%', 'display': 'block'})
     }
     $('#popUp').css('top', ($(window).height() - $('#popUp').height()) / 2)
+    $('#timer').css('left', ($(window).width() - $('#timer').width()) / 2)
+    $('#level').css('left', ($(window).width() - $('#level').width()) / 2)
   }
 
   function reset () {
@@ -233,9 +235,12 @@ document.addEventListener('DOMContentLoaded', function () {
       feedback = 'Not too bad. But you can do better.'
     } else if (level <= 12) {
       feedback = "You're really good at this. Think you can beat your score?"
-    } else if (level === 14) {
+    } else if (level === 15) {
       // easter egg for annabel
-      feedback = "YOU MADE IT, ANNA! GOOD JOB! Now on to level 15! (if you're not anna, sorry. You're really awesome too. Kthybye.)"
+      feedback = 'Anna and/or Denise you have made it so far... PRESS ON. LEVEL 16 IS WITHIN REACH.'
+    } else if (level === 16) {
+      // easter egg for annabel
+      feedback = "WHAT?! YOU MADE IT TO LEVEL 16?! Are you sure you aren't cheating? Cause this is OUT OF THIS WORLD! Now... on to level 17!!!"
     } else {
       feedback = "YOU HAVE X-RAY VISION AND LIFE ISN'T FAIR."
     }
@@ -270,6 +275,7 @@ document.addEventListener('DOMContentLoaded', function () {
     } else {
       clockTick()
     }
+    checkWindow()
   }
 
   function clockTick () {
