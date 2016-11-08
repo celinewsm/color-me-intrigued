@@ -1,0 +1,26 @@
+{
+  "name": "color-me-intrigued",
+  "version": "1.0.0",
+  "description": "Color Switching Game",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/celinewsm/color-me-intrigued.git"
+  },
+  "author": "celinewsm",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/celinewsm/color-me-intrigued/issues"
+  },
+  "homepage": "https://github.com/celinewsm/color-me-intrigued#readme",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "path": "^0.12.7",
+    "sequelize": "^3.24.8",
+    "sequelize-cli": "^2.4.0"
+  }
+}
