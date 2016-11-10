@@ -286,6 +286,39 @@ document.addEventListener('DOMContentLoaded', function () {
           }
           }).fail(function () {
             console.log("ajax failed")
+
+             var temp2 = $('<div>')
+             var headlineInput = $('<h1>').text('Score')
+             var subHeadInput = $('<p>').text("You've reached level " + level + '!')
+             var button = $('<button>').attr('id', 'reset').text('Try again')
+             var feedback
+             // generate feedback according to level
+             if (level <= 3) {
+               feedback = 'Seriously?! You either need to get your eyes checked or TRY HARDER!'
+             } else if (level <= 7) {
+               feedback = 'Not too bad. But you can do better.'
+             } else if (level <= 12) {
+               feedback = "You're really good at this. Think you can beat your score?"
+             } else if (level === 15) {
+               // easter egg for annabel
+               feedback = 'Anna and/or Denise you have made it so far... PRESS ON. LEVEL 16 IS WITHIN REACH.'
+             } else if (level === 16) {
+               // easter egg for annabel
+               feedback = "WHAT?! YOU MADE IT TO LEVEL 16?! Are you sure you aren't cheating? Cause this is OUT OF THIS WORLD! Now... on to level 17!!!"
+             } else {
+               feedback = "YOU HAVE X-RAY VISION AND LIFE ISN'T FAIR."
+             }
+             var copyInput = $('<p>').text(feedback)
+             // inserting declared variables into popup
+             temp2.attr('id', 'popUp').append($('<div>').attr('id', 'popUpText').append(headlineInput).append(subHeadInput).append(copyInput).append(button))
+             // inserting popup into DOM
+             $('#insertOverlays').append(temp2)
+             checkWindow()
+             $('#reset').click(function () {
+               console.log('Reset button clicked')
+               reset()
+             })
+
           })
 
         }
