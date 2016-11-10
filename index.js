@@ -27,10 +27,35 @@ app.get('/highscores', function(req, res, next) {
 
 
 app.post('/highscore/new', function(req, res) {
-  db.leaderboard.create({
-    name: req.body.name,
-    level: req.body.level
-  }).then(function(newScore){
+  db.leaderboard.findOrCreate({
+  where: {
+    name: req.body.name
+  },
+  defaults: { level: req.body.level }
+}).spread(function(score, created) {
+    if(created){
+      res.redirect('/highscores')
+    } else if (score.level < req.body.level) {
+      db.leaderboard.update({
+        level: req.body.level
+      }, {
+        where: {
+          name: req.body.name
+        }
+      }).then(function(score) {
+        res.redirect('/highscores')
+    });
+  } else {
     res.redirect('/highscores')
-  })
+  }
+
+});
+
+
+  // db.leaderboard.create({
+  //   name: req.body.name,
+  //   level: req.body.level
+  // }).then(function(newScore){
+  //   res.redirect('/highscores')
+  // })
 });

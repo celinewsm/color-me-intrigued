@@ -336,18 +336,12 @@ document.addEventListener('DOMContentLoaded', function () {
     var end = "<button id='reset'>New game</button></div></div>"
     var inbetween = ""
     for (var i = 0 ; i < highscores.length ; i++){
-      console.log("highscores[i]",highscores[i])
-      console.log("highscores[i].name",highscores[i].name)
       inbetween = inbetween + "<div class='indexCol'>"+(i+1)+"</div><div class='nameCol'>"+highscores[i].name+"</div><div class='levelCol'>Lv."+highscores[i].level+"</div>"
     }
-    console.log("start",start)
-    console.log("inbetween",inbetween)
-    console.log("end",end)
     $('#insertOverlays').empty()
     createOverlay()
     $('#insertOverlays').append(start + inbetween + end)
     checkWindow()
-
     $('#reset').click(function () {
       console.log('Reset button clicked')
       reset()
