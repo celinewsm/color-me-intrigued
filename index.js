@@ -18,10 +18,10 @@ app.get('/', function (req, res) {
 
 app.get('/highscores', function(req, res, next) {
   db.leaderboard.findAll({
-  limit: 10,
-  order: 'level DESC'
-}).then(function(highscores) {
-  res.json(highscores)
+    limit: 10,
+    order: 'level DESC'
+  }).then(function(highscores) {
+    res.json(highscores)
   });
 });
 
@@ -35,6 +35,7 @@ app.post('/highscore/new', function(req, res) {
 }).spread(function(score, created) {
     if(created){
       res.redirect('/highscores')
+      // update highscore if new highscore > old highscore
     } else if (score.level < req.body.level) {
       db.leaderboard.update({
         level: req.body.level
@@ -44,18 +45,9 @@ app.post('/highscore/new', function(req, res) {
         }
       }).then(function(score) {
         res.redirect('/highscores')
-    });
-  } else {
-    res.redirect('/highscores')
-  }
-
-});
-
-
-  // db.leaderboard.create({
-  //   name: req.body.name,
-  //   level: req.body.level
-  // }).then(function(newScore){
-  //   res.redirect('/highscores')
-  // })
+      });
+    } else {
+      res.redirect('/highscores')
+    }
+  });
 });

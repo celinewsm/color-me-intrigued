@@ -13,13 +13,12 @@ document.addEventListener('DOMContentLoaded', function () {
   }
   landingPage()
 
+  // creates landing page rainbow div
   function randomRainbow () {
-    // $('#sortable').empty()
     var rainbowHex = ['#9400D3', '#4B0082', '#0000FF', '#00FF00', '#FFFF00', '#FF7F00', '#FF0000']
     rainbowHex = shuffle(rainbowHex)
     numOfShades = rainbowHex.length
     for (var z = 0; z < rainbowHex.length; z++) {
-      console.log('creating raindow divs')
       var temp = $('<div>')
       temp.addClass('row')
       temp.attr('id', 'shade' + [z])
@@ -38,7 +37,6 @@ document.addEventListener('DOMContentLoaded', function () {
     $('#insertOverlays').append(temp2)
     // insert reset button for start game
     $('#reset').click(function () {
-      console.log('Reset button clicked')
       reset()
     })
   }
@@ -70,7 +68,6 @@ document.addEventListener('DOMContentLoaded', function () {
     $('#sortable').empty()
     // set back to level 1
     level = 1
-    console.log('reset level to: ' + level)
     // create and draw shades
     newLevel()
     // reset time + interval
@@ -138,12 +135,9 @@ document.addEventListener('DOMContentLoaded', function () {
     for (var i = 0; i < difficultyLevel.length; i++) {
       // find out difficulty level
       if (difficultyLevel[i]['lowestLvl'] <= level && difficultyLevel[i]['highestLvl'] >= level) {
-        console.log('difficulty level selected: ' + difficultyLevel[i]['difficulty'])
         var hue = Math.round(Math.random() * 210) // 310 for higher difficulty (higher chance of blue)
         hueAdd = difficultyLevel[i]['hueAdd']
-        console.log('hueAdd: ' + hueAdd)
         lightAdd = difficultyLevel[i]['lightAdd']
-        console.log('lightAdd: ' + lightAdd)
         var light = 30
         var match = numOfShades
         var matchToo = numOfShades
@@ -205,7 +199,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // sort sortedColorHolder array by randomPos
     sortedColorHolder = sortByKey(sortedColorHolder, 'randomPos')
-    // console.log('sortColorHolder: ' + sortedColorHolder)
 
     // inserting colors into the array in order of randomPos
     for (var i = 0; i < sortedColorHolder.length; i++) {
@@ -236,7 +229,6 @@ document.addEventListener('DOMContentLoaded', function () {
        checkWindow()
 
        $('#submitHighscore').click(function () {
-         console.log('Submit button clicked')
          $.ajax({
          url: window.location.href+'highscore/new',
          type: 'POST',
@@ -250,7 +242,6 @@ document.addEventListener('DOMContentLoaded', function () {
        })
 
        $('#reset').click(function () {
-         console.log('Reset button clicked')
          reset()
        })
 
@@ -286,7 +277,6 @@ document.addEventListener('DOMContentLoaded', function () {
            $('#insertOverlays').append(temp2)
            checkWindow()
            $('#reset').click(function () {
-             console.log('Reset button clicked')
              reset()
            })
            $('#viewHighscore').click(function () {
@@ -343,7 +333,6 @@ document.addEventListener('DOMContentLoaded', function () {
     $('#insertOverlays').append(start + inbetween + end)
     checkWindow()
     $('#reset').click(function () {
-      console.log('Reset button clicked')
       reset()
     })
 
@@ -366,11 +355,9 @@ document.addEventListener('DOMContentLoaded', function () {
         for (var l = 0; l < colorHolder.length; l++) {
           valueToPush = colorHolder[l]['randomPos']
           forChecking.push('shade' + valueToPush)
-        // console.log('forChecking array: ' + forChecking)
         }
         forCheckingToo = forChecking.slice(0)
         forChecking.reverse()
-        // console.log('forCheckingToo array: ' + forCheckingToo)
 
         for (var i = 0; i < forChecking.length; i++) {
           if ($('.row')[i].id === forChecking[i]) {
@@ -397,7 +384,6 @@ document.addEventListener('DOMContentLoaded', function () {
   })
 
   $(window).resize(function () {
-    console.log('Window resized')
     checkWindow()
   })
 })
