@@ -223,38 +223,82 @@ document.addEventListener('DOMContentLoaded', function () {
   function gameOver () {
     intervalManager(false)
     createOverlay()
-    var temp2 = $('<div>')
-    var headlineInput = $('<h1>').text('Score')
-    var subHeadInput = $('<p>').text("You've reached level " + level + '!')
-    var button = $('<button>').attr('id', 'reset').text('Try again')
-    var feedback
-    // generate feedback according to level
-    if (level <= 3) {
-      feedback = 'Seriously?! You either need to get your eyes checked or TRY HARDER!'
-    } else if (level <= 7) {
-      feedback = 'Not too bad. But you can do better.'
-    } else if (level <= 12) {
-      feedback = "You're really good at this. Think you can beat your score?"
-    } else if (level === 15) {
-      // easter egg for annabel
-      feedback = 'Anna and/or Denise you have made it so far... PRESS ON. LEVEL 16 IS WITHIN REACH.'
-    } else if (level === 16) {
-      // easter egg for annabel
-      feedback = "WHAT?! YOU MADE IT TO LEVEL 16?! Are you sure you aren't cheating? Cause this is OUT OF THIS WORLD! Now... on to level 17!!!"
-    } else {
-      feedback = "YOU HAVE X-RAY VISION AND LIFE ISN'T FAIR."
-    }
-    var copyInput = $('<p>').text(feedback)
-    // inserting declared variables into popup
-    temp2.attr('id', 'popUp').append($('<div>').attr('id', 'popUpText').append(headlineInput).append(subHeadInput).append(copyInput).append(button))
-    // inserting popup into DOM
-    $('#insertOverlays').append(temp2)
-    checkWindow()
-    $('#reset').click(function () {
-      console.log('Reset button clicked')
-      reset()
-    })
-  }
+    var currentHighscores
+    $.ajax({
+    url: window.location.href+'highscores',
+    type: 'GET',
+    dataType: 'json'
+    }).done(function (highscores) {
+      currentHighscores = highscores
+      if (level > highscores[highscores.length-1].level){
+
+        $('#insertOverlays').append("<div id='popUp'><div id='popUpText'><h1>New Highscore</h1><p>You've reached level " + level + " and made it into the wall of fame!</p><input id='nameForHighscore' class='inputField' type='text' placeholder='Enter Your Name'></input><br/><button id='submitHighscore' class='genericButton'>Submit</button><br/><button id='reset'>Try again</button></div></div>")
+       checkWindow()
+
+       $('#submitHighscore').click(function () {
+         console.log('Submit button clicked')
+         $.ajax({
+         url: window.location.href+'highscore/new',
+         type: 'POST',
+         dataType: 'json',
+         data: {name: $('#nameForHighscore').val(),
+                level: level}
+         }).done(function (highscores) {
+           drawHighscoreTable(highscores)
+
+         })
+       })
+
+       $('#reset').click(function () {
+         console.log('Reset button clicked')
+         reset()
+       })
+
+
+      } else {
+
+          var temp2 = $('<div>')
+          var headlineInput = $('<h1>').text('Score')
+          var subHeadInput = $('<p>').text("You've reached level " + level + '!')
+          var button = $('<button>').attr('id', 'reset').text('Try again')
+          var buttonHighscore = $('<button>').attr('id', 'viewHighscore').attr('class', 'genericButton').text('View Highscore')
+          var feedback
+           // generate feedback according to level
+           if (level <= 3) {
+             feedback = 'Seriously?! You either need to get your eyes checked or TRY HARDER!'
+           } else if (level <= 7) {
+             feedback = 'Not too bad. But you can do better.'
+           } else if (level <= 12) {
+             feedback = "You're really good at this. Think you can beat your score?"
+           } else if (level === 15) {
+             // easter egg for annabel
+             feedback = 'Anna and/or Denise you have made it so far... PRESS ON. LEVEL 16 IS WITHIN REACH.'
+           } else if (level === 16) {
+             // easter egg for annabel
+             feedback = "WHAT?! YOU MADE IT TO LEVEL 16?! Are you sure you aren't cheating? Cause this is OUT OF THIS WORLD! Now... on to level 17!!!"
+           } else {
+             feedback = "YOU HAVE X-RAY VISION AND LIFE ISN'T FAIR."
+           }
+           var copyInput = $('<p>').text(feedback)
+           // inserting declared variables into popup
+           temp2.attr('id', 'popUp').append($('<div>').attr('id', 'popUpText').append(headlineInput).append(subHeadInput).append(copyInput).append(button).append(buttonHighscore))
+           // inserting popup into DOM
+           $('#insertOverlays').append(temp2)
+           checkWindow()
+           $('#reset').click(function () {
+             console.log('Reset button clicked')
+             reset()
+           })
+           $('#viewHighscore').click(function () {
+             drawHighscoreTable(currentHighscores)
+           })
+
+          }
+          }).fail(function () {
+            console.log("ajax failed")
+          })
+
+        }
 
   // change timeNow at reset as well
   var jaws = document.getElementById('jaws')
@@ -284,6 +328,36 @@ document.addEventListener('DOMContentLoaded', function () {
     $('#timer').text('Time left: ' + timeNow)
     timeNow -= 1
   }
+
+
+  function drawHighscoreTable(highscores){
+
+    var start = "<div id='popUp'><div id='popUpText'><h1>Highscore</h1><div class='highscoreContainer'>"
+    var end = "<button id='reset'>New game</button></div></div>"
+    var inbetween = ""
+    for (var i = 0 ; i < highscores.length ; i++){
+      console.log("highscores[i]",highscores[i])
+      console.log("highscores[i].name",highscores[i].name)
+      inbetween = inbetween + "<div class='indexCol'>"+(i+1)+"</div><div class='nameCol'>"+highscores[i].name+"</div><div class='levelCol'>Lv."+highscores[i].level+"</div>"
+    }
+    console.log("start",start)
+    console.log("inbetween",inbetween)
+    console.log("end",end)
+    $('#insertOverlays').empty()
+    createOverlay()
+    $('#insertOverlays').append(start + inbetween + end)
+    checkWindow()
+
+    $('#reset').click(function () {
+      console.log('Reset button clicked')
+      reset()
+    })
+
+
+  }
+
+
+
 
   // to make divs draggable
   $(function () {

@@ -74,6 +74,45 @@ h1 {
   text-decoration: underline;
 }
 
+
+.genericButton{
+  color: #ffffff;
+  background: #404040;
+  padding: 10px 20px 10px 20px;
+  text-decoration: none;
+  border:none;
+}
+
+.genericButton:hover {
+  background: #bd3d3d;
+  text-decoration: none;
+}
+
+.inputField{
+  background-color: black;
+  color: white;
+  border-top:0;
+  border-left:0;
+  border-right:0;
+  outline: none;
+  margin:2em;
+}
+
+.indexCol{
+  display: inline-block;
+  width:10%;
+}
+
+.nameCol{
+  display: inline-block;
+  width:75%;
+}
+
+.levelCol{
+  display: inline-block;
+  width:10%;
+}
+
 @media only screen and (max-device-width: 550px) {
   body {
     font-size: 250%;

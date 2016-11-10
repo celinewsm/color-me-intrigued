@@ -18,10 +18,10 @@ app.get('/', function (req, res) {
 
 app.get('/highscores', function(req, res, next) {
   db.leaderboard.findAll({
-  limit: 5,
+  limit: 10,
   order: 'level DESC'
 }).then(function(highscores) {
-  res.json({highscores: highscores})
+  res.json(highscores)
   });
 });
 
