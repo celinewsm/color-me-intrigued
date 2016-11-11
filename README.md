@@ -3,8 +3,10 @@ Color Me Intrigued
 
 ```
 "Why is there a slight gradient on this nav bar?"
+
 "No there isn't."
 "Yes there is!"
+
 "Are you color blind?"
 ```
 *&#42;Boom&#42;* **A shade swapping gradient game was born &#128161;**
@@ -19,12 +21,12 @@ Color Me Intrigued
 Preview
 -------------
 Desktop
-:   ![Demo Square](https://i.giphy.com/3oz8xOQyTmUaPR5HNK.gif)
 
-Mobile
+![Demo Square](https://i.giphy.com/3oz8xOQyTmUaPR5HNK.gif)
 
-:   ![Demo Mobile](https://i.giphy.com/26tkkZfSV6Jl6SW7m.gif)
-	> Mobile responsiveness is **super** important
+Mobile (Mobile responsiveness is **super** important)
+
+![Demo Mobile](https://i.giphy.com/26tkkZfSV6Jl6SW7m.gif)
 
 Stack
 -------------
@@ -33,4 +35,3 @@ Stack
 - [Express](http://expressjs.com/) - Web Application Framework
 - [Sequelize](http://docs.sequelizejs.com/) - Object-relational mapping (ORM)
 - [PostgreSQL](https://www.postgresql.org/) - Database management system
- 
