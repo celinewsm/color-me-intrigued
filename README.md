@@ -5,6 +5,7 @@ Color Me Intrigued
 "Why is there a slight gradient on this nav bar?"
 
 "No there isn't."
+
 "Yes there is!"
 
 "Are you color blind?"
@@ -35,3 +36,7 @@ Stack
 - [Express](http://expressjs.com/) - Web Application Framework
 - [Sequelize](http://docs.sequelizejs.com/) - Object-relational mapping (ORM)
 - [PostgreSQL](https://www.postgresql.org/) - Database management system
+
+Deployed link
+-------------
+[color-me-intrigued.heroku.com](http://color-me-intrigued.heroku.com)
